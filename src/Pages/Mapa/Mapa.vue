@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import HelloWorld from "src/components/HelloWorld.vue";
-import Sede from "src/components/Sede.vue";
+import { computed } from "vue";
+import MapaContainer from "src/components/MapaContainer.vue";
+// import Sede from "src/components/Sede.vue";
 import { useSedes } from "src/composables/useSedes";
 
 const sedes = useSedes();
-console.log(sedes);
+const markers = computed(() =>
+  sedes.value
+    .map((sede) => sede?.ubicacion?.coordenadas)
+    .filter((sede) => sede.lat && sede.lng)
+);
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <Sede v-for="(sede, i) in sedes" :key="i" :msg="sede.nombre" />
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  </div> -->
+  <MapaContainer :markers="markers" />
 </template>
 
 <style scoped>

@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "firebase": "^9.21.0",
+    "leaflet": "^1.9.3",
     "pinia": "^2.0.36",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.3",
     "@vitejs/plugin-vue": "^4.1.0",
     "autoprefixer": "^10.4.14",
     "eslint-plugin-hexagonal-architecture": "^1.0.3",
