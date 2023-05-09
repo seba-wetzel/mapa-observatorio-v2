@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import HelloWorld from "src/components/HelloWorld.vue";
+import Sede from "src/components/Sede.vue";
+import { useSedes } from "src/composables/useSedes";
+
+const sedes = useSedes();
+console.log(sedes);
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="src/assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <Sede v-for="(sede, i) in sedes" :key="i" :msg="sede.nombre" />
   </div>
   <HelloWorld msg="Vite + Vue" />
 </template>
