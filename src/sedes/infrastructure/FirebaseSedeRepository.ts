@@ -51,3 +51,5 @@ export class FirebaseSedeRepository implements SedeRepository {
   //     await doc.delete();
   // }
 }
+
+export const Repository = new FirebaseSedeRepository();

@@ -1,12 +1,13 @@
 import { onMounted, ref } from "vue";
 import { Sede } from "src/sedes/domain/Sede";
-import { FirebaseSedeRepository } from "src/sedes/infrastructure/FirebaseSedeRepository";
+import { useSedesStore } from "src/store/sedesStore";
 
 export function useSedes() {
   const sedes = ref([] as Sede[]);
+  const store = useSedesStore();
   onMounted(async () => {
-    const Repository = new FirebaseSedeRepository();
-    sedes.value = await Repository.getAll();
+    await store.setAllSedes();
+    sedes.value = store.sedes;
   });
   return sedes;
 }

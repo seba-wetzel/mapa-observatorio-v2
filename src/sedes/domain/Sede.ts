@@ -1,5 +1,6 @@
 import type { Ubicacion } from "./Ubicacion";
 export interface Sede {
+  id?: number | null | undefined | string;
   tipo: string;
   nombre: string;
   ubicacion: Ubicacion;

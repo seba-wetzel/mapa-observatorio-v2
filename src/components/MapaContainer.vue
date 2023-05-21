@@ -1,5 +1,7 @@
 <template>
-  <div id="mapContainer"></div>
+  <div class="block absolute w-full h-full">
+    <div id="mapContainer"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -17,13 +19,15 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  map.value = L.map("mapContainer").setView([-32, -64], 5);
+  map.value = L.map("mapContainer", {
+    zoomControl: false,
+    attributionControl: false,
+  }).setView([-42, -64], 5);
   L.tileLayer("https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}", {
-    attribution:
-      'Mapa &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
     maxZoom: 15,
-    minZoom: 5,
+    minZoom: 3,
   }).addTo(map.value);
+  map.value.boxZoom.disable();
 });
 
 watch(
@@ -38,7 +42,7 @@ watch(
 
 <style scoped>
 #mapContainer {
-  width: 100vw;
-  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
 }
 </style>

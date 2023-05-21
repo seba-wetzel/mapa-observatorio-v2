@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import MapaContainer from "src/components/MapaContainer.vue";
-// import Sede from "src/components/Sede.vue";
+import SearchBar from "src/components/SearchBar.vue";
 import { useSedes } from "src/composables/useSedes";
 
 const sedes = useSedes();
@@ -13,10 +13,10 @@ const markers = computed(() =>
 </script>
 
 <template>
-  <!-- <div>
-    <Sede v-for="(sede, i) in sedes" :key="i" :msg="sede.nombre" />
-  </div> -->
-  <MapaContainer :markers="markers" />
+  <div class="flex flex-col flex-grow">
+    <SearchBar />
+    <MapaContainer :markers="markers" class="-z-10 rounded-lg" />
+  </div>
 </template>
 
 <style scoped>
