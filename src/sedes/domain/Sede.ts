@@ -8,6 +8,6 @@ export interface Sede {
   email: string | null;
   link_prin: string | null;
   link_int: string | null;
-  descripcion: string;
-  comentarios: string | null;
+  descripcion: string | null;
+  comentarios: string | null | undefined;
 }

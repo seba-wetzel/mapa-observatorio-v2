@@ -6,18 +6,12 @@ export const useSedesStore = defineStore("sedes", {
   state: () => ({
     sedes: [] as Sede[],
     filter: [] as Sede[],
+    busqueda: "",
   }),
   getters: {
     getSedes(): Sede[] {
       return this.sedes;
     },
-    // searchSedeByName(name: string): Sede | undefined {
-    //   return state.sedes.find((sede) => sede.nombre.includes(name));
-    // },
-    // searchSedeByName(name:string): Sede[] | null {
-    //   console.log("searchSedeByName", name);
-    //   return this.sedes.find((sede) => sede.nombre.includes(name));
-    // },
   },
   actions: {
     setSedes(sedes: Sede[]) {
@@ -27,10 +21,13 @@ export const useSedesStore = defineStore("sedes", {
       this.sedes = await getAllSedes();
     },
     searchSedeByName(name: string) {
-      const needle = name.toLowerCase();
-      if (needle === "") {
-        this.filter = this.sedes;
+      const needle = name.toLowerCase().trim();
+      this.busqueda = needle;
+      if (!!!needle) {
+        this.filter = [];
+        return;
       }
+
       this.filter = this.sedes.filter(({ nombre }) =>
         nombre.toLowerCase().includes(needle)
       );
