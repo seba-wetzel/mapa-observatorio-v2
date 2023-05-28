@@ -39,7 +39,7 @@ const clear = () => {
   emits("update:modelValue", "");
 };
 
-const update = (event: InputEvent) => {
+const update = (event: Event) => {
   const value = (event.target as HTMLInputElement).value;
   emits("update:modelValue", value);
 };
