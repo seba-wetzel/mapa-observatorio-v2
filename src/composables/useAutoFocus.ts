@@ -1,12 +1,14 @@
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 export function useAutoFocus() {
   const inputRef = ref<HTMLInputElement | null>(null);
+  const isFocused = ref<boolean>(false);
   watch(
     () => inputRef.value,
     () => {
       inputRef.value?.focus();
     }
   );
-  return inputRef;
+
+  return { inputRef, isFocused };
 }

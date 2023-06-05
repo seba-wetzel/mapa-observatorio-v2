@@ -1,32 +1,33 @@
 <template>
-  <div v-if="results.length > 0" class="flex flex-col full-h bg-white">
-    <Result v-for="sede in results" :key="sede.id" :sede="sede" />
-    <button class="flex font-bold text-blue-500 align-middle justify-start m-4">
-      <MapIcon class="inline w-6 h-6" /> Mostrar mapa
-    </button>
-
-    <!-- <p class="flex font-bold text-blue-500 align-middle justify-start m-4">
-      <MapIcon class="inline w-6 h-6" /> Mostrar mapa
-    </p> -->
+  <div class="flex flex-col bg-white">
+    <div class="flex-grow">
+      <Result
+        class="text-gray-600"
+        v-for="sede in resultados"
+        :key="sede.id"
+        :sede="sede"
+      />
+    </div>
+    <div
+      class="sticky bottom-0 left-0 right-0 flex shadow-black shadow-sm bg-white"
+    >
+      <button
+        @click="showMap"
+        class="flex flex-row flex-grow justify-center font-bold text-blue-500 m-2"
+      >
+        <MapIcon class="inline w-6 h-6" /> Mostrar mapa
+      </button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { watchEffect } from "vue";
 import Result from "src/components/Result.vue";
-import { useSearchSede } from "src/composables/useSearchSede";
 import { MapIcon } from "@heroicons/vue/24/outline";
-
-const { busqueda } = defineProps<{ busqueda: string }>();
-
-const { results, search } = useSearchSede();
-
-watchEffect(() => {
-  console.log("busqueda", busqueda);
-  search(busqueda);
-});
+import { useSedesResults } from "src/composables/useSearchSede";
+import { useMenuStore } from "src/store/menuStores";
+const resultados = useSedesResults();
+const { setMenu } = useMenuStore();
+const showMap = () => {
+  setMenu({ name: "search", isOpen: false });
+};
 </script>
-<style scoped>
-.full-h {
-  height: 100dvh;
-}
-</style>

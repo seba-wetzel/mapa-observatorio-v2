@@ -32,7 +32,17 @@ onMounted(() => {
 
 watch(
   () => props.markers,
-  (markers) => {
+  (markers: any, oldMakers: any) => {
+    //find if this two arrays are excatly the same
+    if (JSON.stringify(markers) === JSON.stringify(oldMakers)) {
+      //reset makers
+      map.value.eachLayer((layer: any) => {
+        if (layer instanceof L.Marker) {
+          map.value.removeLayer(layer);
+        }
+      });
+    }
+
     markers.forEach((marker: any) => {
       L.marker([marker.lat, marker.lng]).addTo(map.value);
     });

@@ -1,19 +1,33 @@
 <template>
-  <div class="fixed flex flex-col flex-grow w-full md:w-72">
-    <SearchBar v-model="busqueda" @hide="hide" />
+  <div
+    class="flex flex-col"
+    :class="
+      busquedaActiva && menus.getMenu('search')?.isOpen
+        ? 'bg-white'
+        : 'bg-transparent'
+    "
+  >
+    <SearchBar
+      @hide="hide"
+      class="sticky p-4 m-1 border border-gray-400 rounded-lg bg-white text-gray-700"
+    />
     <ResultsContainer
-      :busqueda="busqueda"
-      class="mt-11 pb-11 h-full overflow-scroll"
+      v-if="menus.getMenu('search')?.isOpen"
+      class="overflow-y-auto flex-grow"
     />
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
 import SearchBar from "src/components/SearchBar.vue";
 import ResultsContainer from "src/components/ResultsContainer.vue";
-const busqueda = ref<string>("");
+import { useMenu } from "src/composables/useMenu";
+import { isSearching } from "src/composables/useSearchSede";
 
-const hide = () => {
+const busquedaActiva = isSearching();
+const menus = useMenu();
+console.log(menus.getMenu("search")?.isOpen);
+const hide = (value: boolean) => {
   console.log("hide");
+  menus.setMenu({ name: "search", isOpen: value });
 };
 </script>

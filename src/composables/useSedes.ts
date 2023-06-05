@@ -1,13 +1,13 @@
-import { onMounted, ref } from "vue";
-import { Sede } from "src/sedes/domain/Sede";
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { useSedesStore } from "src/store/sedesStore";
 
 export function useSedes() {
-  const sedes = ref([] as Sede[]);
   const store = useSedesStore();
+  store.setAllSedes();
+  const sedes = storeToRefs(store);
   onMounted(async () => {
     await store.setAllSedes();
-    sedes.value = store.sedes;
   });
   return sedes;
 }

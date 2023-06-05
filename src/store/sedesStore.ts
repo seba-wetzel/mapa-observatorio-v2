@@ -1,48 +1,66 @@
+import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import { watchDebounced } from "@vueuse/core";
+
 import { Sede } from "src/sedes/domain/Sede";
 import { getAllSedes } from "src/sedes/application/getAllSedes";
 
-export const useSedesStore = defineStore("sedes", {
-  state: () => ({
-    sedes: [] as Sede[],
-    filter: [] as Sede[],
-    busqueda: "",
-  }),
-  getters: {
-    getSedes(): Sede[] {
-      return this.sedes;
-    },
-  },
-  actions: {
-    setSedes(sedes: Sede[]) {
-      this.sedes = sedes;
-    },
-    async setAllSedes() {
-      this.sedes = await getAllSedes();
-    },
-    searchSedeByName(name: string) {
-      const needle = name.toLowerCase().trim();
-      this.busqueda = needle;
-      if (!!!needle) {
-        this.filter = [];
-        return;
-      }
+export const useSedesStore = defineStore("sedes", () => {
+  const sedes = ref<Sede[]>([]);
+  const resultados = ref<Sede[]>([]);
+  const busqueda = ref<string>("");
+  const selectedSede = ref<Sede | null>(null);
 
-      this.filter = this.sedes.filter(({ nombre }) =>
-        nombre.toLowerCase().includes(needle)
-      );
+  const setAllSedes = async () => {
+    sedes.value = await getAllSedes();
+  };
+
+  const setSelectedSede = (sede: Sede) => {
+    selectedSede.value = sede;
+  };
+  const searchSedeByName = (name: string) => {
+    const needle = name.toLowerCase().trim();
+    busqueda.value = needle;
+    if (!!!needle) {
+      resultados.value = [];
+      return;
+    }
+
+    resultados.value = sedes.value.filter(({ nombre }) =>
+      nombre.toLowerCase().includes(needle)
+    );
+  };
+  const markers = computed(() => {
+    const toFilter = busqueda.value ? resultados.value : sedes.value;
+    return toFilter
+      .map((sede) => sede?.ubicacion?.coordenadas)
+      .filter((sede) => sede.lat && sede.lng);
+  });
+  const isSearching = computed(() => {
+    return busqueda.value.length > 0;
+  });
+
+  const setBusqueda = (value: string) => {
+    busqueda.value = value;
+  };
+
+  watchDebounced(
+    busqueda,
+    () => {
+      searchSedeByName(busqueda.value);
     },
-  },
+    { debounce: 500, maxWait: 1000 }
+  );
+  return {
+    sedes,
+    resultados,
+    selectedSede,
+    busqueda,
+    isSearching,
+    setBusqueda,
+    searchSedeByName,
+    setAllSedes,
+    setSelectedSede,
+    markers,
+  };
 });
-
-// ejemplo de store con pinia y composition api (posible reemplazo de la clase de arriba)
-// export const useCounterStore = defineStore('counter', () => {
-//     const count = ref(0)
-//     const name = ref('Eduardo')
-//     const doubleCount = computed(() => count.value * 2)
-//     function increment() {
-//       count.value++
-//     }
-
-//     return { count, name, doubleCount, increment }
-//   })
