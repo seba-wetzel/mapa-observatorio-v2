@@ -17,10 +17,15 @@ export const useMenuStore = defineStore("menu", () => {
     });
   };
   const getMenu = (name: string) => menus.value.get(name);
+  const getMenuState = (name: string) => {
+    const menu = menus.value.get(name);
+    return menu?.isOpen;
+  };
   return {
     menus,
     setMenu,
     setMenus,
     getMenu,
+    getMenuState,
   };
 });

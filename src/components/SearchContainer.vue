@@ -1,33 +1,32 @@
 <template>
-  <div
-    class="flex flex-col"
-    :class="
-      busquedaActiva && menus.getMenu('search')?.isOpen
-        ? 'bg-white'
-        : 'bg-transparent'
-    "
-  >
+  <div class="flex flex-col" :class="menuState ? 'bg-white' : 'bg-transparent'">
     <SearchBar
-      @hide="hide"
       class="sticky p-4 m-1 border border-gray-400 rounded-lg bg-white text-gray-700"
     />
-    <ResultsContainer
-      v-if="menus.getMenu('search')?.isOpen"
-      class="overflow-y-auto flex-grow"
-    />
+    <Transition mode="in-out" name="fade">
+      <ResultsContainer v-if="menuState" class="overflow-y-auto flex-grow" />
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
+import { watchEffect } from "vue";
 import SearchBar from "src/components/SearchBar.vue";
 import ResultsContainer from "src/components/ResultsContainer.vue";
-import { useMenu } from "src/composables/useMenu";
-import { isSearching } from "src/composables/useSearchSede";
+import { useMenuState } from "src/composables/useMenu";
 
-const busquedaActiva = isSearching();
-const menus = useMenu();
-console.log(menus.getMenu("search")?.isOpen);
-const hide = (value: boolean) => {
-  console.log("hide");
-  menus.setMenu({ name: "search", isOpen: value });
-};
+const menuState = useMenuState("search");
+watchEffect(() => {
+  console.log(menuState);
+});
 </script>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
