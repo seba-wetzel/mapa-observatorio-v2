@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <button v-if="menuState" @click="close">
+    <button v-if="menuState || optionsMenu" @click="close">
       <ArrowLeftIcon class="w-6 h-6" />
     </button>
     <button v-else @click="showOptiones">
@@ -38,6 +38,7 @@ const { setBusqueda } = useSearchSede();
 const inputTex = ref<string>("");
 const { setMenu } = useMenu();
 const menuState = useMenuState("search");
+const optionsMenu = useMenuState("options");
 
 const clear = () => {
   inputTex.value = "";
@@ -50,6 +51,7 @@ const show = () => {
 
 const hide = () => {
   setMenu({ name: "search", isOpen: false });
+  setMenu({ name: "options", isOpen: false });
 };
 const close = () => {
   hide();
