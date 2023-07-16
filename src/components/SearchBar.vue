@@ -32,7 +32,6 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useSearchSede } from "src/composables/useSearchSede";
 import { useMenu, useMenuState } from "src/composables/useMenu";
-import { Input } from "postcss";
 
 const { setBusqueda } = useSearchSede();
 const inputTex = ref<string>("");

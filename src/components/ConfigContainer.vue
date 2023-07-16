@@ -1,7 +1,23 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import ToggleInput from "src/components/Elements/ToggleInput.vue";
+import Collapse from "src/components/Elements/Collapse.vue";
+import { provinciasArgentinas } from "src/utils/filter.ts";
+const init = Array(provinciasArgentinas.length).fill(true);
+let checkbox = ref([...init]);
+</script>
 <template>
-  <div class="flex flex-col bg-white">
+  <div class="flex flex-col justify-end bg-white">
     <div class="flex-grow">
-      <h6>Filtros</h6>
+      <Collapse title="Filtros por provincias">
+        <div v-for="(provincia, i) in provinciasArgentinas" :key="provincia">
+          <ToggleInput
+            :label="provincia"
+            :checked="checkbox[i]"
+            class="flex justify-start"
+          />
+        </div>
+      </Collapse>
     </div>
     <div
       class="sticky bottom-0 left-0 right-0 flex shadow-black shadow-sm bg-white"

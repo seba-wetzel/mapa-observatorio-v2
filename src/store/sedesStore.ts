@@ -34,7 +34,7 @@ export const useSedesStore = defineStore("sedes", () => {
     const toFilter = busqueda.value ? resultados.value : sedes.value;
     return toFilter
       .map((sede) => sede?.ubicacion?.coordenadas)
-      .filter((sede) => sede.lat && sede.lng);
+      .filter((sede) => sede?.lat && sede.lng);
   });
   const isSearching = computed(() => {
     return busqueda.value.length > 0;

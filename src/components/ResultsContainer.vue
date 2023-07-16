@@ -4,7 +4,7 @@
       <Result
         class="text-gray-600"
         v-for="sede in resultados"
-        :key="sede.id"
+        :key="keyG(sede.id)"
         :sede="sede"
       />
     </div>
@@ -29,5 +29,9 @@ const resultados = useSedesResults();
 const { setMenu } = useMenuStore();
 const showMap = () => {
   setMenu({ name: "search", isOpen: false });
+};
+
+const keyG = (id: string | number | null | undefined) => {
+  return id ?? Symbol();
 };
 </script>
