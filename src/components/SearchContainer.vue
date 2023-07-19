@@ -15,17 +15,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { watchEffect } from "vue";
 import SearchBar from "src/components/SearchBar.vue";
 import ResultsContainer from "src/components/ResultsContainer.vue";
 import ConfigContainer from "./ConfigContainer.vue";
 import { useMenuState } from "src/composables/useMenu";
-
 const menuState = useMenuState("search");
 const optionsState = useMenuState("options");
-watchEffect(() => {
-  console.log(menuState);
-});
 </script>
 <style scoped>
 .fade-enter-active,

@@ -1,6 +1,7 @@
 // Archivo de ejemplo de funcion para filtrar dinamicamente las sedes por provincia (hay que ajustarlo para respetar el shape de las sedes y la ubicacion real)
 
-import type { Ubicacion } from "../sedes/domain/Ubicacion";
+import { Ubicacion } from "src/sedes/domain/Ubicacion";
+import { tipos_sedes } from "src/sedes/domain/Sede";
 export interface Sede {
   nombre: string;
   ubicacion: Ubicacion;
@@ -95,16 +96,17 @@ filterBy.push(
 );
 
 const filter = (sede: Sede) =>
-  filterBy.some((provincia) => provincia === sede.ubicacion);
+  filterBy.some((provincia) => provincia === sede.ubicacion.provincia);
 const results = sedes.filter(filter);
-console.log(
-  results.sort((a, b) => {
-    if (a.ubicacion < b.ubicacion) {
-      return -1;
-    } else if (a.ubicacion > b.ubicacion) {
-      return 1;
-    } else {
-      return 0;
-    }
-  })
-);
+results.sort((a, b) => {
+  if (a.ubicacion < b.ubicacion) {
+    return -1;
+  } else if (a.ubicacion > b.ubicacion) {
+    return 1;
+  } else {
+    return 0;
+  }
+});
+
+// console.log(results);
+// console.log(tipos_sedes);

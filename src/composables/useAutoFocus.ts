@@ -1,4 +1,4 @@
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 
 export function useAutoFocus() {
   const inputRef = ref<HTMLInputElement | null>(null);
