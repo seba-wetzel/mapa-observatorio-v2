@@ -23,6 +23,7 @@ const { provincias, tipos } = useFilters();
           v-model="tipos"
           :options="tipos_sedes"
           label="Tipos de sedes seleccionadas"
+          multiple
         />
       </v-container>
     </div>

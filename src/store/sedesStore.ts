@@ -1,15 +1,27 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed, watch } from "vue";
+import { defineStore, storeToRefs } from "pinia";
 import { watchDebounced } from "@vueuse/core";
 
 import { Sede } from "src/sedes/domain/Sede";
 import { getAllSedes } from "src/sedes/application/getAllSedes";
 
+import { useFiltersStore } from "src/store/filtersStore";
+const filtersStore = useFiltersStore();
+
 export const useSedesStore = defineStore("sedes", () => {
   const sedes = ref<Sede[]>([]);
-  const resultados = ref<Sede[]>([]);
+  const filteredSedes = ref<Sede[]>([]);
+  // const resultados = ref<Sede[]>([]);
   const busqueda = ref<string>("");
+  const resultados = computed(() => {
+    if (!!!busqueda.value) return [];
+    return filteredSedes.value.filter(({ nombre }) =>
+      nombre.toLowerCase().includes(busqueda.value)
+    );
+  });
+
   const selectedSede = ref<Sede | null>(null);
+  const { filtros } = storeToRefs(filtersStore);
 
   const setAllSedes = async () => {
     sedes.value = await getAllSedes();
@@ -18,18 +30,12 @@ export const useSedesStore = defineStore("sedes", () => {
   const setSelectedSede = (sede: Sede) => {
     selectedSede.value = sede;
   };
+
   const searchSedeByName = (name: string) => {
     const needle = name.toLowerCase().trim();
     busqueda.value = needle;
-    if (!!!needle) {
-      resultados.value = [];
-      return;
-    }
-
-    resultados.value = sedes.value.filter(({ nombre }) =>
-      nombre.toLowerCase().includes(needle)
-    );
   };
+
   const markers = computed(() => {
     const toFilter = busqueda.value ? resultados.value : sedes.value;
     return toFilter
@@ -51,6 +57,26 @@ export const useSedesStore = defineStore("sedes", () => {
     },
     { debounce: 500, maxWait: 1000 }
   );
+
+  watch(
+    () => filtros.value,
+    () => {
+      const provincias = filtros.value.provincias;
+      const tipos = filtros.value.tiposSedes;
+      console.log({ provincias, tipos });
+
+      const filterProvincia = (sede: Sede) =>
+        provincias?.some((provincia) => provincia === sede.ubicacion.provincia);
+
+      const filterTipo = (sede: Sede) =>
+        tipos?.some((tipo) => tipo === sede.tipo);
+
+      const filtered = sedes.value.filter(filterProvincia).filter(filterTipo);
+      filteredSedes.value = filtered;
+    },
+    { immediate: true }
+  );
+
   return {
     sedes,
     resultados,
