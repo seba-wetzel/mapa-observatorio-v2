@@ -1,26 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
 import { provinciasArgentinas } from "src/sedes/domain/Ubicacion.ts";
-import type { Provincia } from "src/sedes/domain/Ubicacion.ts";
 import { tipos_sedes } from "src/sedes/domain/Sede";
-import type { TipoSede } from "src/sedes/domain/Sede";
 import { useFilters } from "src/composables/useFilters";
 import Select from "src/components/Elements/Select.vue";
 
-const filters = useFilters();
-
-const provincias = ref<Provincia[]>([]);
-const tipos = ref<TipoSede[]>([]);
-
-onMounted(() => {
-  provincias.value = filters.filtros.value?.provincias ?? [];
-  tipos.value = filters.filtros.value?.tiposSedes ?? [];
-});
-watch([provincias, tipos], (prev) => {
-  console.log("el watch", prev);
-  filters.setProvincias(provincias.value);
-  filters.setTiposSedes(tipos.value);
-});
+const { provincias, tipos } = useFilters();
 </script>
 <template>
   <div class="flex flex-col justify-end bg-white">

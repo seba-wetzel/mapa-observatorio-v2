@@ -10,9 +10,7 @@ export interface Coordenadas {
   lat: number;
 }
 
-export type Provincia = (typeof provincias)[number];
-
-const provincias: string[] = [
+const provincias = [
   "Buenos Aires",
   "Córdoba",
   "Santa Fe",
@@ -35,7 +33,9 @@ const provincias: string[] = [
   "Catamarca",
   "Santa Cruz",
   "Tierra del Fuego",
-];
+] as const;
+
+export type Provincia = (typeof provincias)[number];
 
 export const provinciasArgentinas: Provincia[] = [
   "Buenos Aires",

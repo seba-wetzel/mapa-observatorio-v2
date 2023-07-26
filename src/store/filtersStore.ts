@@ -16,8 +16,6 @@ const initValues: Filters = {
 const filtros = useStorage<Filters>("filtros", initValues, sessionStorage);
 
 export const useFiltersStore = defineStore("filtros", () => {
-  console.log("filtros", filtros.value);
-
   const setProvincias = (value: Provincia[] | []) => {
     filtros.value.provincias = value;
   };

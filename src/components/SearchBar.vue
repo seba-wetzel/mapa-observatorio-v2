@@ -46,6 +46,7 @@ const clear = () => {
 };
 const show = () => {
   setMenu({ name: "search", isOpen: true });
+  setMenu({ name: "options", isOpen: false });
 };
 
 const hide = () => {
