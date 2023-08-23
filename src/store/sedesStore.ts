@@ -13,8 +13,24 @@ export const useSedesStore = defineStore("sedes", () => {
   const filteredSedes = ref<Sede[]>([]);
   // const resultados = ref<Sede[]>([]);
   const busqueda = ref<string>("");
+
+  const applyFilters = () => {
+    const provincias = filtros.value.provincias;
+    const tipos = filtros.value.tiposSedes;
+
+    const filterProvincia = (sede: Sede) =>
+      provincias?.some((provincia) => provincia === sede.ubicacion.provincia);
+
+    const filterTipo = (sede: Sede) =>
+      tipos?.some((tipo) => tipo === sede.tipo);
+
+    const filtered = sedes.value.filter(filterProvincia).filter(filterTipo);
+    filteredSedes.value = filtered;
+  };
+
   const resultados = computed(() => {
     if (!!!busqueda.value) return [];
+    applyFilters();
     return filteredSedes.value.filter(({ nombre }) =>
       nombre.toLowerCase().includes(busqueda.value)
     );
@@ -22,6 +38,7 @@ export const useSedesStore = defineStore("sedes", () => {
 
   const selectedSede = ref<Sede | null>(null);
   const { filtros } = storeToRefs(filtersStore);
+  console.log({ filtros });
 
   const setAllSedes = async () => {
     sedes.value = await getAllSedes();
@@ -58,24 +75,23 @@ export const useSedesStore = defineStore("sedes", () => {
     { debounce: 500, maxWait: 1000 }
   );
 
-  watch(
-    () => filtros.value,
-    () => {
-      const provincias = filtros.value.provincias;
-      const tipos = filtros.value.tiposSedes;
-      console.log({ provincias, tipos });
+  // watch(
+  //   () => filtros.value,
+  //   () => {
+  //     const provincias = filtros.value.provincias;
+  //     const tipos = filtros.value.tiposSedes;
 
-      const filterProvincia = (sede: Sede) =>
-        provincias?.some((provincia) => provincia === sede.ubicacion.provincia);
+  //     const filterProvincia = (sede: Sede) =>
+  //       provincias?.some((provincia) => provincia === sede.ubicacion.provincia);
 
-      const filterTipo = (sede: Sede) =>
-        tipos?.some((tipo) => tipo === sede.tipo);
+  //     const filterTipo = (sede: Sede) =>
+  //       tipos?.some((tipo) => tipo === sede.tipo);
 
-      const filtered = sedes.value.filter(filterProvincia).filter(filterTipo);
-      filteredSedes.value = filtered;
-    },
-    { immediate: true }
-  );
+  //     const filtered = sedes.value.filter(filterProvincia).filter(filterTipo);
+  //     filteredSedes.value = filtered;
+  //   },
+  //   { immediate: true }
+  // );
 
   return {
     sedes,

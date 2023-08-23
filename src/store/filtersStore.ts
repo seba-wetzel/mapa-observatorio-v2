@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import type { Provincia } from "src/sedes/domain/Ubicacion";
 import type { TipoSede } from "src/sedes/domain/Sede";
+import { provinciasArgentinas } from "src/sedes/domain/Ubicacion";
+import { tipos_sedes } from "src/sedes/domain/Sede";
 
 interface Filters {
   provincias?: Provincia[] | [];
@@ -10,8 +12,8 @@ interface Filters {
 }
 //const menuMap = new Map<string, Filters>();
 const initValues: Filters = {
-  provincias: [],
-  tiposSedes: [],
+  provincias: provinciasArgentinas,
+  tiposSedes: tipos_sedes,
 };
 const filtros = useStorage<Filters>("filtros", initValues, sessionStorage);
 
