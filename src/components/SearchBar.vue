@@ -1,27 +1,3 @@
-<template>
-  <div class="flex items-center">
-    <button v-if="menuState || optionsMenu" @click="close">
-      <ArrowLeftIcon class="w-6 h-6" />
-    </button>
-    <button v-else @click="showOptiones">
-      <Bars3Icon class="w-6 h-6" />
-    </button>
-    <input
-      v-model="inputTex"
-      @focus="show"
-      @input="onUpdate"
-      type="text"
-      placeholder="Buscar..."
-      class="flex-grow ml-2 text-sm focus:outline-none"
-    />
-    <button v-if="inputTex.length === 0">
-      <MagnifyingGlassIcon class="w-6 h-6" />
-    </button>
-    <button v-else @click="clear">
-      <XMarkIcon class="w-6 h-6" />
-    </button>
-  </div>
-</template>
 <script setup lang="ts">
 import { ref } from "vue";
 import {
@@ -65,3 +41,28 @@ const onUpdate = (event: Event) => {
   setBusqueda(value);
 };
 </script>
+
+<template>
+  <div class="flex items-center">
+    <button v-if="menuState || optionsMenu" @click="close">
+      <ArrowLeftIcon class="w-6 h-6" />
+    </button>
+    <button v-else @click="showOptiones">
+      <Bars3Icon class="w-6 h-6" />
+    </button>
+    <input
+      v-model="inputTex"
+      @focus="show"
+      @input="onUpdate"
+      type="text"
+      placeholder="Buscar..."
+      class="flex-grow ml-2 text-sm focus:outline-none"
+    />
+    <button v-if="inputTex.length === 0">
+      <MagnifyingGlassIcon class="w-6 h-6" />
+    </button>
+    <button v-else @click="clear">
+      <XMarkIcon class="w-6 h-6" />
+    </button>
+  </div>
+</template>

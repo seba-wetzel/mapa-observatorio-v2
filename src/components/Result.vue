@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { Sede } from "src/sedes/domain/Sede";
+const { sede } = defineProps<{ sede: Sede }>();
+import { MapPinIcon, PhoneIcon } from "@heroicons/vue/24/outline";
+import { useSedesStore } from "src/store/sedesStore";
+const store = useSedesStore();
+const selectSede = () => {
+  store.setSelectedSede(sede);
+};
+const isSelected = computed(() => store.selectedSede?.id === sede.id);
+</script>
+
 <template>
   <div class="shadow-black drop-shadow bg-white py-2 px-4">
     <div class="flex flex-row justify-between">
@@ -18,20 +31,29 @@
           {{ sede.comentarios ? sede.comentarios : "Sin comentarios" }}
         </p>
       </div>
-      <div class="flex flex-col justify-center text-blue-500">
+      <div
+        class="flex flex-col justify-center text-blue-500"
+        :class="isSelected ? 'text-red-600' : ''"
+      >
         <div class="flex flex-row gap-4 items-end">
           <a
             v-if="sede.telefono"
             :href="`tel:${sede.telefono}`"
             class="flex flex-col items-center"
           >
-            <div class="border-blue-600 rounded-full border-[1px] p-2">
+            <div
+              class="border-blue-600 rounded-full border-[1px] p-2"
+              :class="isSelected ? 'border-red-600' : ''"
+            >
               <PhoneIcon class="w-5 h-5" />
             </div>
             <p class="text-xs mt-1">Llamar</p>
           </a>
-          <button class="flex flex-col items-center">
-            <div class="border-blue-600 rounded-full border-[1px] p-2">
+          <button @click="selectSede" class="flex flex-col items-center">
+            <div
+              class="border-blue-600 rounded-full border-[1px] p-2"
+              :class="isSelected ? 'border-red-600' : ''"
+            >
               <MapPinIcon class="w-5 h-5" />
             </div>
             <p class="text-xs mt-1">Ubicar</p>
@@ -41,8 +63,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { Sede } from "src/sedes/domain/Sede";
-const { sede } = defineProps<{ sede: Sede }>();
-import { MapPinIcon, PhoneIcon } from "@heroicons/vue/24/outline";
-</script>

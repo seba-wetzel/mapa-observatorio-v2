@@ -1,22 +1,33 @@
-<template>
-  <div class="block absolute w-full h-full">
-    <div id="mapContainer"></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import { useSedes } from "src/composables/useSedes";
+import { useSedesStore } from "src/store/sedesStore";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 const map = ref<any>(null);
+const { markers } = useSedes();
+//TODO:hacer un composable, no usar el store directamente
+const store = useSedesStore();
 
-const props = defineProps({
-  markers: {
-    type: Array,
-    default: () => [],
-  },
-});
+watch(
+  () => store.selectedSede,
+  (sede) => {
+    if (sede) {
+      map.value.setView(
+        [sede.ubicacion.coordenadas?.lat, sede.ubicacion.coordenadas?.lng],
+        15
+      );
+    }
+  }
+);
+
+// const props = defineProps({
+//   markers: {
+//     type: Array,
+//     default: () => [],
+//   },
+// });
 
 onMounted(() => {
   map.value = L.map("mapContainer", {
@@ -31,12 +42,12 @@ onMounted(() => {
 });
 
 watch(
-  () => props.markers,
+  () => markers.value,
   (markers: any, oldMakers: any) => {
-    console.log(markers);
     //find if this two arrays are excatly the same
     if (JSON.stringify(markers) !== JSON.stringify(oldMakers)) {
       //reset makers
+
       map.value.eachLayer((layer: any) => {
         if (layer instanceof L.Marker) {
           map.value.removeLayer(layer);
@@ -47,7 +58,7 @@ watch(
           .addTo(map.value)
           // .on("click", () => {
           //   console.log(marker);
-          //   // map.value.flyTo([marker.lat, marker.lng], 15);
+          //   //
           // })
           .bindPopup("gggg");
       });
@@ -55,6 +66,12 @@ watch(
   }
 );
 </script>
+
+<template>
+  <div class="block absolute w-full h-full">
+    <div id="mapContainer"></div>
+  </div>
+</template>
 
 <style scoped>
 #mapContainer {

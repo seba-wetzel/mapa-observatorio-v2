@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import Result from "src/components/Result.vue";
+import { MapIcon } from "@heroicons/vue/24/outline";
+import { useSedesResults } from "src/composables/useSearchSede";
+import { useMenuStore } from "src/store/menuStores";
+const resultados = useSedesResults();
+const { setMenu } = useMenuStore();
+const showMap = () => {
+  setMenu({ name: "search", isOpen: false });
+};
+
+const keyG = (id: string | number | null | undefined) => {
+  return id ?? Symbol();
+};
+</script>
+
 <template>
   <div class="flex flex-col bg-white">
     <div class="flex-grow">
@@ -20,18 +36,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import Result from "src/components/Result.vue";
-import { MapIcon } from "@heroicons/vue/24/outline";
-import { useSedesResults } from "src/composables/useSearchSede";
-import { useMenuStore } from "src/store/menuStores";
-const resultados = useSedesResults();
-const { setMenu } = useMenuStore();
-const showMap = () => {
-  setMenu({ name: "search", isOpen: false });
-};
-
-const keyG = (id: string | number | null | undefined) => {
-  return id ?? Symbol();
-};
-</script>

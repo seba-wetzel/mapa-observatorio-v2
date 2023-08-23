@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import SearchBar from "src/components/SearchBar.vue";
+import ResultsContainer from "src/components/ResultsContainer.vue";
+import ConfigContainer from "./ConfigContainer.vue";
+import { useMenuState } from "src/composables/useMenu";
+const menuState = useMenuState("search");
+const optionsState = useMenuState("options");
+</script>
+
 <template>
   <div
     class="flex flex-col"
@@ -14,14 +23,6 @@
     </Transition>
   </div>
 </template>
-<script setup lang="ts">
-import SearchBar from "src/components/SearchBar.vue";
-import ResultsContainer from "src/components/ResultsContainer.vue";
-import ConfigContainer from "./ConfigContainer.vue";
-import { useMenuState } from "src/composables/useMenu";
-const menuState = useMenuState("search");
-const optionsState = useMenuState("options");
-</script>
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
