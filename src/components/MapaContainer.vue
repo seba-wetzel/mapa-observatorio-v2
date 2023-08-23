@@ -22,12 +22,12 @@ onMounted(() => {
   map.value = L.map("mapContainer", {
     zoomControl: false,
     attributionControl: false,
-  }).setView([-42, -64], 5);
+  }).setView([-42, -64], 4);
   L.tileLayer("https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}", {
     maxZoom: 15,
-    minZoom: 3,
+    minZoom: 4,
   }).addTo(map.value);
-  map.value.boxZoom.disable();
+  // map.value.boxZoom.disable();
 });
 
 watch(
@@ -43,7 +43,13 @@ watch(
         }
       });
       markers.forEach((marker: any) => {
-        L.marker([marker.lat, marker.lng]).addTo(map.value);
+        L.marker([marker.lat, marker.lng])
+          .addTo(map.value)
+          // .on("click", () => {
+          //   console.log(marker);
+          //   // map.value.flyTo([marker.lat, marker.lng], 15);
+          // })
+          .bindPopup("gggg");
       });
     }
   }

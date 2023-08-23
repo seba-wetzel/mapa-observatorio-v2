@@ -7,7 +7,7 @@ import Select from "src/components/Elements/Select.vue";
 const { provincias, tipos } = useFilters();
 </script>
 <template>
-  <div class="flex flex-col justify-end bg-white">
+  <div class="flex flex-grow flex-col justify-end bg-white">
     <div class="flex flex-grow overflow-y-auto flex-wrap">
       <v-container>
         <p class="text-center font-semibold">Filtros de busqueda</p>

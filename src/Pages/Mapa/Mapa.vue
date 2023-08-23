@@ -15,7 +15,7 @@ setMenus(menus);
 
 <template>
   <SearchContainer
-    class="absolute flex flex-col w-[100dvw] h-[100dvh] md:w-96"
+    class="absolute flex flex-col w-[100dvw] max-h-[100dvh] md:w-96"
   />
   <MapaContainer :markers="markers" class="absolute -z-10 rounded-lg" />
 </template>

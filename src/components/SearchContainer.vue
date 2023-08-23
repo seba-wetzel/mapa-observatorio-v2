@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex flex-col"
-    :class="menuState || optionsState ? 'bg-white' : 'bg-transparent'"
+    :class="menuState || optionsState ? 'bg-white h-full' : 'bg-transparent'"
   >
     <SearchBar
       class="sticky p-4 m-1 border border-gray-400 rounded-lg bg-white text-gray-700"
