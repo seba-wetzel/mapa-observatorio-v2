@@ -56,7 +56,17 @@ export const useSedesStore = defineStore("sedes", () => {
   const markers = computed(() => {
     const toFilter = busqueda.value ? resultados.value : sedes.value;
     return toFilter
-      .map((sede) => sede?.ubicacion?.coordenadas)
+      .map((sede) => {
+        const {
+          ubicacion: { coordenadas },
+          ...data
+        } = sede;
+        return {
+          ...data,
+          lat: coordenadas?.lat,
+          lng: coordenadas?.lng,
+        };
+      })
       .filter((sede) => sede?.lat && sede.lng);
   });
   const isSearching = computed(() => {

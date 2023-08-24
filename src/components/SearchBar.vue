@@ -7,34 +7,41 @@ import {
   Bars3Icon,
 } from "@heroicons/vue/24/outline";
 import { useSearchSede } from "src/composables/useSearchSede";
-import { useMenu, useMenuState } from "src/composables/useMenu";
+import { useMenu } from "src/composables/useMenu";
 
 const { setBusqueda } = useSearchSede();
 const inputTex = ref<string>("");
-const { setMenu } = useMenu();
-const menuState = useMenuState("search");
-const optionsMenu = useMenuState("options");
+
+const {
+  open: openSearch,
+  close: closeSearch,
+  state: menuState,
+} = useMenu("search");
+
+const {
+  open: openOptions,
+  close: closeOptions,
+  state: optionsMenu,
+} = useMenu("options");
 
 const clear = () => {
   inputTex.value = "";
   setBusqueda("");
-  setMenu({ name: "search", isOpen: false });
+  closeSearch();
 };
 const show = () => {
-  setMenu({ name: "search", isOpen: true });
-  setMenu({ name: "options", isOpen: false });
+  openSearch();
+  closeOptions();
 };
 
 const hide = () => {
-  setMenu({ name: "search", isOpen: false });
-  setMenu({ name: "options", isOpen: false });
+  closeSearch();
+  closeOptions();
 };
-const close = () => {
-  hide();
-};
+
 const showOptiones = () => {
   console.log("showOptiones");
-  setMenu({ name: "options", isOpen: true });
+  openOptions();
 };
 const onUpdate = (event: Event) => {
   const { value } = <HTMLInputElement>event.target;
@@ -44,7 +51,7 @@ const onUpdate = (event: Event) => {
 
 <template>
   <div class="flex items-center">
-    <button v-if="menuState || optionsMenu" @click="close">
+    <button v-if="menuState || optionsMenu" @click="hide">
       <ArrowLeftIcon class="w-6 h-6" />
     </button>
     <button v-else @click="showOptiones">

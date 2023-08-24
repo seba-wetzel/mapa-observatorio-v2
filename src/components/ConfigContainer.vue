@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import Select from "src/components/Elements/Select.vue";
+import ShowMap from "./Elements/ShowMap.vue";
 import { provinciasArgentinas } from "src/sedes/domain/Ubicacion.ts";
 import { tipos_sedes } from "src/sedes/domain/Sede";
 import { useFilters } from "src/composables/useFilters";
-import Select from "src/components/Elements/Select.vue";
 
 const { provincias, tipos } = useFilters();
 </script>
@@ -30,13 +31,7 @@ const { provincias, tipos } = useFilters();
     <div
       class="sticky bottom-0 left-0 right-0 flex shadow-black shadow-sm bg-white"
     >
-      <!-- <button
-        @click="showMap"
-        class="flex flex-row flex-grow justify-center font-bold text-blue-500 m-2"
-      >
-        <MapIcon class="inline w-6 h-6" /> Mostrar mapa
-      </button> -->
-      Cerrar
+      <ShowMap />
     </div>
   </div>
 </template>

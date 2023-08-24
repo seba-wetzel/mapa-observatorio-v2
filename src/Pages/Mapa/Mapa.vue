@@ -2,9 +2,8 @@
 import MapaContainer from "src/components/MapaContainer.vue";
 import Navbar from "src/components/NavBar.vue";
 
-import { useMenuStore } from "src/store/menuStores";
+import { setMenus } from "src/composables/useMenu";
 
-const { setMenus } = useMenuStore();
 const menus = [
   { name: "filters", isOpen: false },
   { name: "search", isOpen: false },

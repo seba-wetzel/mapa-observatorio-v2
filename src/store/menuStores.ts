@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 
-interface Menu {
+export interface Menu {
   name: string;
   icon?: string;
   isOpen: boolean;

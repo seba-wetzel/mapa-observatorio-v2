@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { MapPinIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
 import { Sede } from "src/sedes/domain/Sede";
 const { sede } = defineProps<{ sede: Sede }>();
-import { MapPinIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 import { useSedesStore } from "src/store/sedesStore";
+import { useMenu } from "src/composables/useMenu";
+const { close: showMap } = useMenu("search");
 const store = useSedesStore();
 const selectSede = () => {
   store.setSelectedSede(sede);
+  showMap();
 };
 const isSelected = computed(() => store.selectedSede?.id === sede.id);
 </script>

@@ -46,8 +46,6 @@ watch(
   (markers: any, oldMakers: any) => {
     //find if this two arrays are excatly the same
     if (JSON.stringify(markers) !== JSON.stringify(oldMakers)) {
-      //reset makers
-
       map.value.eachLayer((layer: any) => {
         if (layer instanceof L.Marker) {
           map.value.removeLayer(layer);
@@ -56,11 +54,11 @@ watch(
       markers.forEach((marker: any) => {
         L.marker([marker.lat, marker.lng])
           .addTo(map.value)
-          // .on("click", () => {
-          //   console.log(marker);
-          //   //
-          // })
-          .bindPopup("gggg");
+          .on("click", () => {
+            console.log(marker);
+            //
+          })
+          .bindPopup(marker.nombre);
       });
     }
   }
