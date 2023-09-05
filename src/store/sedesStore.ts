@@ -48,6 +48,12 @@ export const useSedesStore = defineStore("sedes", () => {
     selectedSede.value = sede;
   };
 
+  const setSelectedSedeByID = (id: string) => {
+    const sede = sedes.value.find((sede) => sede.id === id);
+    if (!!!sede) return;
+    setSelectedSede(sede);
+  };
+
   const searchSedeByName = (name: string) => {
     const needle = name.toLowerCase().trim();
     busqueda.value = needle;
@@ -113,6 +119,7 @@ export const useSedesStore = defineStore("sedes", () => {
     searchSedeByName,
     setAllSedes,
     setSelectedSede,
+    setSelectedSedeByID,
     markers,
   };
 });

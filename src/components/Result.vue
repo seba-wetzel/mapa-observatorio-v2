@@ -1,24 +1,27 @@
 <script setup lang="ts">
 import { MapPinIcon, PhoneIcon } from "@heroicons/vue/24/outline";
-import { computed } from "vue";
+
 import { Sede } from "src/sedes/domain/Sede";
 const { sede } = defineProps<{ sede: Sede }>();
-import { useSedesStore } from "src/store/sedesStore";
+// import { useSedesStore } from "src/store/sedesStore";
+import { isThisSedeSelected, setSelectedSede } from "src/composables/useSedes";
 import { useMenu } from "src/composables/useMenu";
 const { close: showMap } = useMenu("search");
-const store = useSedesStore();
+// const store = useSedesStore();
+
 const selectSede = () => {
-  store.setSelectedSede(sede);
+  setSelectedSede(sede);
   showMap();
 };
-const isSelected = computed(() => store.selectedSede?.id === sede.id);
+const isSelected = isThisSedeSelected(sede.id);
 </script>
 
 <template>
   <div class="shadow-black drop-shadow bg-white py-2 px-4">
+    <v-divider></v-divider>
     <div class="flex flex-row justify-between">
       <div class="flex flex-col my-2 mr-4 overflow-hidden">
-        <h6 class="font-bold text-black">
+        <h6 class="font-bold text-black line-clamp-2 hover:line-clamp-none">
           {{ sede.nombre }}
         </h6>
         <p

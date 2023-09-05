@@ -3,7 +3,7 @@ import { MapIcon } from "@heroicons/vue/24/outline";
 import { useMenu } from "src/composables/useMenu";
 const { close: showMap } = useMenu("options");
 const { close: closeSearch } = useMenu("search");
-
+//TODO: un metodo closeAllMenus que cierre todos los menus
 const close = () => {
   closeSearch();
   showMap();

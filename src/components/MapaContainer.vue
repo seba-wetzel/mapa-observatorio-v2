@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useSedes } from "src/composables/useSedes";
-import { useSedesStore } from "src/store/sedesStore";
+import { setSelectedSedeByID, getSelectedSede } from "src/composables/useSedes";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 const map = ref<any>(null);
 const { markers } = useSedes();
-//TODO:hacer un composable, no usar el store directamente
-const store = useSedesStore();
+const selectedSede = getSelectedSede();
 
 watch(
-  () => store.selectedSede,
+  () => selectedSede.value,
   (sede) => {
     if (sede) {
       map.value.setView(
@@ -55,10 +54,11 @@ watch(
         L.marker([marker.lat, marker.lng])
           .addTo(map.value)
           .on("click", () => {
-            console.log(marker);
+            // console.log(marker);
+            setSelectedSedeByID(marker.id);
             //
-          })
-          .bindPopup(marker.nombre);
+          });
+        // .bindPopup(marker.nombre);
       });
     }
   }
@@ -66,9 +66,9 @@ watch(
 </script>
 
 <template>
-  <div class="block absolute w-full h-full">
+  <article class="block absolute w-full h-full">
     <div id="mapContainer"></div>
-  </div>
+  </article>
 </template>
 
 <style scoped>
