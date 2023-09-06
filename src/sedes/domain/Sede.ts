@@ -6,6 +6,7 @@ export interface Sede {
   link_prin?: string;
   ubicacion: Ubicacion;
   tipo: TipoSede;
+  tipo_long: string;
   id_usuario: string;
   link_int: string;
   simple: string;

@@ -16,7 +16,7 @@ export function useSedes() {
 
 export const isSedeSelected = () => {
   return computed((): [boolean, Sede | null] => [
-    !!store.selectedSede?.id,
+    !!store.selectedSede?.ubicacion,
     store.selectedSede,
   ]);
 };
