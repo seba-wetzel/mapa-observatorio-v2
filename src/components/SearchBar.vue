@@ -50,7 +50,7 @@ const onUpdate = (event: Event) => {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <aside class="flex items-center">
     <button v-if="menuState || optionsMenu" @click="hide">
       <ArrowLeftIcon class="w-6 h-6" />
     </button>
@@ -71,5 +71,5 @@ const onUpdate = (event: Event) => {
     <button v-else @click="clear">
       <XMarkIcon class="w-6 h-6" />
     </button>
-  </div>
+  </aside>
 </template>
