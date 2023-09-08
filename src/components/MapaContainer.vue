@@ -4,15 +4,18 @@ import { useSedes } from "src/composables/useSedes";
 import { setSelectedSedeByID, getSelectedSede } from "src/composables/useSedes";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useSearchSede } from "src/composables/useSearchSede";
 
 const map = ref<any>(null);
 const { markers } = useSedes();
 const selectedSede = getSelectedSede();
+const { setBusqueda } = useSearchSede();
 
 watch(
   () => selectedSede.value,
   (sede) => {
     if (sede) {
+      setBusqueda(sede.nombre);
       map.value.setView(
         [sede.ubicacion.coordenadas?.lat, sede.ubicacion.coordenadas?.lng],
         15

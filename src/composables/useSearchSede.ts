@@ -20,3 +20,8 @@ export const isSearching = () => {
   const { isSearching } = storeToRefs(store);
   return isSearching;
 };
+
+export const useBusqueda = () => {
+  const { busqueda } = storeToRefs(store);
+  return { busqueda, clearBusqueda: store.clearBusqueda };
+};

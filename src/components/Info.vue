@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { watch } from "vue";
 import BottomSheet from "./Elements/BottomSheet.vue";
 import { isSedeSelected } from "src/composables/useSedes";
 
 const sede = isSedeSelected();
-watch(sede, (value) => {
-  if (value[0]) {
-    console.log(value[1]);
-  }
-});
 </script>
 <template>
   <BottomSheet v-if="sede[0]" class="w-[100dvw] md:w-96">

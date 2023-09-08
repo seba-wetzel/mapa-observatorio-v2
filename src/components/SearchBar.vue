@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import {
   MagnifyingGlassIcon,
   XMarkIcon,
   ArrowLeftIcon,
   Bars3Icon,
 } from "@heroicons/vue/24/outline";
-import { useSearchSede } from "src/composables/useSearchSede";
-import { useMenu } from "src/composables/useMenu";
-
-const { setBusqueda } = useSearchSede();
-const inputTex = ref<string>("");
+import { useBusqueda } from "src/composables/useSearchSede";
+import { useMenu, closeAllMenus } from "src/composables/useMenu";
+const { busqueda, clearBusqueda } = useBusqueda();
 
 const {
   open: openSearch,
@@ -25,47 +22,31 @@ const {
 } = useMenu("options");
 
 const clear = () => {
-  inputTex.value = "";
-  setBusqueda("");
+  clearBusqueda();
   closeSearch();
 };
 const show = () => {
   openSearch();
   closeOptions();
 };
-
-const hide = () => {
-  closeSearch();
-  closeOptions();
-};
-
-const showOptiones = () => {
-  console.log("showOptiones");
-  openOptions();
-};
-const onUpdate = (event: Event) => {
-  const { value } = <HTMLInputElement>event.target;
-  setBusqueda(value);
-};
 </script>
 
 <template>
   <aside class="flex items-center">
-    <button v-if="menuState || optionsMenu" @click="hide">
+    <button v-if="menuState || optionsMenu" @click="closeAllMenus">
       <ArrowLeftIcon class="w-6 h-6" />
     </button>
-    <button v-else @click="showOptiones">
+    <button v-else @click="openOptions">
       <Bars3Icon class="w-6 h-6" />
     </button>
     <input
-      v-model="inputTex"
+      v-model="busqueda"
       @focus="show"
-      @input="onUpdate"
       type="text"
       placeholder="Buscar..."
       class="flex-grow ml-2 text-sm focus:outline-none"
     />
-    <button v-if="inputTex.length === 0">
+    <button v-if="busqueda.length === 0">
       <MagnifyingGlassIcon class="w-6 h-6" />
     </button>
     <button v-else @click="clear">

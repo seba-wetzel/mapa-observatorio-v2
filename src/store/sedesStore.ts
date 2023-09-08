@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { defineStore, storeToRefs } from "pinia";
 import { watchDebounced } from "@vueuse/core";
 
@@ -13,6 +13,10 @@ export const useSedesStore = defineStore("sedes", () => {
   const filteredSedes = ref<Sede[]>([]);
   // const resultados = ref<Sede[]>([]);
   const busqueda = ref<string>("");
+  const needle = ref<string>("");
+
+  const selectedSede = ref<Sede | null>(null);
+  const { filtros } = storeToRefs(filtersStore);
 
   const applyFilters = () => {
     const provincias = filtros.value.provincias;
@@ -28,17 +32,22 @@ export const useSedesStore = defineStore("sedes", () => {
     filteredSedes.value = filtered;
   };
 
+  // watchEffect(() => {
+  //   if (!!!busqueda.value) console.log("busqueda vacia");
+  //   if (!!!busqueda.value) return [];
+  //   applyFilters();
+  //   resultados.value = filteredSedes.value.filter(({ nombre }) =>
+  //     nombre.toLowerCase().includes(busqueda.value.toLowerCase().trim())
+  //   );
+  // });
+
   const resultados = computed(() => {
     if (!!!busqueda.value) return [];
     applyFilters();
     return filteredSedes.value.filter(({ nombre }) =>
-      nombre.toLowerCase().includes(busqueda.value)
+      nombre.toLowerCase().includes(needle.value)
     );
   });
-
-  const selectedSede = ref<Sede | null>(null);
-  const { filtros } = storeToRefs(filtersStore);
-  console.log({ filtros });
 
   const setAllSedes = async () => {
     sedes.value = await getAllSedes();
@@ -54,9 +63,11 @@ export const useSedesStore = defineStore("sedes", () => {
     setSelectedSede(sede);
   };
 
+  const clearSelectedSede = () => (selectedSede.value = null);
+
   const searchSedeByName = (name: string) => {
-    const needle = name.toLowerCase().trim();
-    busqueda.value = needle;
+    // console.log("searchSedeByName", name);
+    needle.value = name.toLowerCase().trim();
   };
 
   const markers = computed(() => {
@@ -82,6 +93,10 @@ export const useSedesStore = defineStore("sedes", () => {
   const setBusqueda = (value: string) => {
     busqueda.value = value;
   };
+  const clearBusqueda = () => {
+    busqueda.value = "";
+    clearSelectedSede();
+  };
 
   watchDebounced(
     busqueda,
@@ -91,34 +106,18 @@ export const useSedesStore = defineStore("sedes", () => {
     { debounce: 500, maxWait: 1000 }
   );
 
-  // watch(
-  //   () => filtros.value,
-  //   () => {
-  //     const provincias = filtros.value.provincias;
-  //     const tipos = filtros.value.tiposSedes;
-
-  //     const filterProvincia = (sede: Sede) =>
-  //       provincias?.some((provincia) => provincia === sede.ubicacion.provincia);
-
-  //     const filterTipo = (sede: Sede) =>
-  //       tipos?.some((tipo) => tipo === sede.tipo);
-
-  //     const filtered = sedes.value.filter(filterProvincia).filter(filterTipo);
-  //     filteredSedes.value = filtered;
-  //   },
-  //   { immediate: true }
-  // );
-
   return {
     sedes,
     resultados,
     selectedSede,
     busqueda,
+    clearBusqueda,
     isSearching,
     setBusqueda,
     searchSedeByName,
     setAllSedes,
     setSelectedSede,
+    clearSelectedSede,
     setSelectedSedeByID,
     markers,
   };
