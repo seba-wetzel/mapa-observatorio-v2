@@ -62,10 +62,12 @@ const animationEnd = () => {
   >
     <div class="bg-white rounded-lg shadow mx-2 mb-2 px-4 py-2">
       <v-btn
+        id="datos"
         class="!absolute -top-4 right-3"
         color="blue-grey"
         elevation="3"
         :icon="!drawerOpen ? 'mdi-arrow-up' : 'mdi-arrow-down'"
+        :aria-label="!drawerOpen ? 'abrir' : 'cerrar'"
         @click="onButtomClick"
         @touchstart.stop=""
       ></v-btn>

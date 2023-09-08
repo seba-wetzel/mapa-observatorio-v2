@@ -4,6 +4,8 @@ import { closeAllMenus } from "src/composables/useMenu";
 </script>
 <template>
   <button
+    id="mostrar mapa"
+    aria-label="Mostrar mapa"
     @click="closeAllMenus"
     class="flex flex-row flex-grow justify-center font-bold text-blue-500 m-2"
   >
