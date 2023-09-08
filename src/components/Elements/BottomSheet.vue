@@ -45,30 +45,42 @@ const onClickOutside = (event: Event) => {
 const onButtomClick = () => {
   drawerOpen.value = !drawerOpen.value;
 };
+
+const animationEnd = () => {
+  console.log("animationEnd");
+};
 </script>
 <template>
   <footer
     :ref="setSelectRef"
-    class="foo shadow"
+    class="foo"
     :class="drawerOpen ? 'open' : 'close'"
     @touchmove="touchmove"
     @touchstart="touchstart"
     v-click-outside="onClickOutside"
+    @animationend="animationEnd"
   >
-    <v-btn
-      class="!absolute -top-4 right-3"
-      color="blue-grey"
-      elevation="3"
-      :icon="!drawerOpen ? 'mdi-arrow-up' : 'mdi-arrow-down'"
-      @click="onButtomClick"
-      @touchstart="(e:Event) => e.stopPropagation()"
-    ></v-btn>
-    <div class="flex flex-col flex-grow justify-between items-center">
-      <div class="select-none min-h-[50px] flex items-center">
-        <slot name="title"></slot>
-      </div>
-      <div class="select-none flex h-60 w-full mx-4 mb-4 overflow-y-scroll">
-        <slot name="content"></slot>
+    <div class="bg-white rounded-lg shadow mx-2 mb-2 px-4 py-2">
+      <v-btn
+        class="!absolute -top-4 right-3"
+        color="blue-grey"
+        elevation="3"
+        :icon="!drawerOpen ? 'mdi-arrow-up' : 'mdi-arrow-down'"
+        @click="onButtomClick"
+        @touchstart.stop=""
+      ></v-btn>
+      <div class="flex flex-col justify-between items-center">
+        <div class="title" :class="drawerOpen ? '' : 'link'">
+          <slot name="title"></slot>
+        </div>
+        <Transition :duration="{ enter: 500, leave: 700 }">
+          <div
+            v-if="drawerOpen"
+            class="select-none flex h-60 w-full mx-4 mb-4 overflow-y-auto"
+          >
+            <slot name="content"></slot>
+          </div>
+        </Transition>
       </div>
     </div>
   </footer>
@@ -77,14 +89,14 @@ const onButtomClick = () => {
 <style scoped>
 footer {
   /* Dejo esta variable por si se utiliza en algun lado mas */
-  --transicion: 0.7s ease-in-out;
+  --transicion: all 0.7s ease-in-out;
 }
 
 .open {
-  max-height: 50%;
+  max-height: 40%;
 }
 .close {
-  max-height: 50px;
+  max-height: 10%;
 }
 .shadow {
   @apply shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset];
@@ -99,7 +111,19 @@ footer {
   scrollbar-width: none; /* Firefox */
 }
 .foo {
-  @apply fixed bg-white z-10 bottom-0 rounded-t-lg;
+  @apply fixed  bottom-0  z-10;
   transition: var(--transicion);
+}
+
+.title {
+  @apply text-2xl font-bold select-none pr-9;
+  transition: var(--transicion);
+}
+.link {
+  display: inline-block;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 </style>

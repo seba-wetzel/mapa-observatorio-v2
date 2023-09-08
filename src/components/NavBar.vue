@@ -9,11 +9,11 @@ const optionsState = useMenuState("options");
 
 <template>
   <nav
-    class="flex flex-col"
+    class="flex flex-col max-h-[100dvh]"
     :class="menuState || optionsState ? 'bg-white h-full' : 'bg-transparent'"
   >
     <SearchBar
-      class="sticky p-4 m-1 border border-gray-400 rounded-lg bg-white text-gray-700"
+      class="sticky p-4 m-2 border border-gray-400 rounded-lg bg-white text-gray-700"
     />
     <v-fade-transition>
       <ResultsContainer v-if="menuState" class="overflow-y-auto flex-grow" />

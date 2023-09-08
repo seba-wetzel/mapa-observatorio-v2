@@ -11,9 +11,9 @@ watch(sede, (value) => {
 });
 </script>
 <template>
-  <BottomSheet v-if="sede[0]" class="w-[100dvw] max-h-[100dvh] md:w-96">
+  <BottomSheet v-if="sede[0]" class="w-[100dvw] md:w-96">
     <template #title>
-      <h1 class="text-2xl font-bold">{{ sede[1]?.nombre }}</h1>
+      {{ sede[1]?.nombre }}
     </template>
     <template #content>
       <ul class="px-4 text-lg font-medium">

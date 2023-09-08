@@ -14,7 +14,7 @@ setMenus(menus);
 <template>
   <v-layout>
     <Navbar
-      class="absolute flex flex-col w-[100dvw] max-h-[100dvh] md:w-96 z-20"
+      class="absolute flex flex-col w-[100dvw] max-h-[100dvh] md:w-96 z-20 overflow"
     />
     <MapaContainer class="absolute -z-10 rounded-lg" />
     <Info />
