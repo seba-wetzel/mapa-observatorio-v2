@@ -53,7 +53,7 @@ const animationEnd = () => {
 <template>
   <footer
     :ref="setSelectRef"
-    class="foo"
+    class="footer"
     :class="drawerOpen ? 'open' : 'close'"
     @touchmove="touchmove"
     @touchstart="touchstart"
@@ -104,23 +104,21 @@ footer {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.foo {
+.footer {
   @apply fixed  bottom-0  z-10;
   transition: var(--transicion);
 }
 
 .title {
-  @apply text-2xl font-bold select-none pr-9;
+  @apply text-2xl font-bold select-none pr-9 w-full overflow-x-hidden;
   transition: var(--transicion);
 }
 .link {
-  display: inline-block;
   width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
