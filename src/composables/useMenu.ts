@@ -32,3 +32,10 @@ export const useMenuState = (name: string) => {
 export const setMenus = (menus: Menu[]) => {
   store.setMenus(menus);
 };
+
+export const closeAllMenus = () => {
+  const menus = storeToRefs(store);
+  menus.menus.value.forEach((menu) => {
+    menu.isOpen = false;
+  });
+};
