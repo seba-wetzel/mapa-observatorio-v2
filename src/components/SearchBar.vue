@@ -40,6 +40,7 @@ const show = () => {
       <Bars3Icon class="w-6 h-6" />
     </button>
     <input
+      name="busqueda"
       v-model="busqueda"
       @focus="show"
       type="text"
