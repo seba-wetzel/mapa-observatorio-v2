@@ -33,10 +33,10 @@ const show = () => {
 
 <template>
   <aside class="flex items-center">
-    <button v-if="menuState || optionsMenu" @click="closeAllMenus">
+    <button name="atras" v-if="menuState || optionsMenu" @click="closeAllMenus">
       <ArrowLeftIcon class="w-6 h-6" />
     </button>
-    <button v-else @click="openOptions">
+    <button name="menu" v-else @click="openOptions">
       <Bars3Icon class="w-6 h-6" />
     </button>
     <input
@@ -47,10 +47,10 @@ const show = () => {
       placeholder="Buscar..."
       class="flex-grow ml-2 text-sm focus:outline-none"
     />
-    <button v-if="busqueda.length === 0">
+    <button name="buscar" v-if="busqueda.length === 0">
       <MagnifyingGlassIcon class="w-6 h-6" />
     </button>
-    <button v-else @click="clear">
+    <button name="limpiar busqueda" v-else @click="clear">
       <XMarkIcon class="w-6 h-6" />
     </button>
   </aside>
