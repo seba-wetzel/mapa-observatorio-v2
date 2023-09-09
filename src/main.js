@@ -7,8 +7,8 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import { VBottomSheet } from "vuetify/labs/VBottomSheet";
-import "@mdi/font/css/materialdesignicons.css";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+// import { VBottomSheet } from "vuetify/labs/VBottomSheet";
 
 import App from "src/App.vue";
 
@@ -18,11 +18,15 @@ const pinia = createPinia();
 const vuetify = createVuetify({
   components: {
     ...components,
-    VBottomSheet,
+    // VBottomSheet,
   },
   directives,
   icons: {
-    defaultSet: "mdi", // This is already the default value - only for display purposes
+    defaultSet: "mdi",
+    aliases,
+    sets: {
+      mdi,
+    },
   },
 });
 

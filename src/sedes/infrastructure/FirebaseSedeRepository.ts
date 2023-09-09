@@ -17,7 +17,7 @@ export class FirebaseSedeRepository implements SedeRepository {
       FireBase.onSnapshot(this.sedesRef, (querySnapshot) => {
         sedes = querySnapshot.docs.map((doc) => doc.data())[0]
           .array_lugares as Sede[];
-        console.log(sedes);
+        //If no id is found, generate a random one to avoid errors in the map maker
         sedes.forEach((sede) => {
           const { id } = sede;
           if (!id) sede.id = crypto.randomUUID();

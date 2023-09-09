@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
+import { mdiArrowUp, mdiArrowDown } from "@mdi/js";
 const drawer = ref<HTMLElement | null>(null);
 
 const setSelectRef = (el: unknown) => {
@@ -45,10 +45,6 @@ const onClickOutside = (event: Event) => {
 const onButtomClick = () => {
   drawerOpen.value = !drawerOpen.value;
 };
-
-const animationEnd = () => {
-  console.log("animationEnd");
-};
 </script>
 <template>
   <footer
@@ -58,7 +54,6 @@ const animationEnd = () => {
     @touchmove="touchmove"
     @touchstart="touchstart"
     v-click-outside="onClickOutside"
-    @animationend="animationEnd"
   >
     <div class="bg-white rounded-lg shadow mx-2 mb-2 px-4 py-2">
       <v-btn
@@ -66,11 +61,14 @@ const animationEnd = () => {
         class="!absolute -top-4 right-3"
         color="blue-grey"
         elevation="3"
-        :icon="!drawerOpen ? 'mdi-arrow-up' : 'mdi-arrow-down'"
+        icon
         :aria-label="!drawerOpen ? 'abrir' : 'cerrar'"
         @click="onButtomClick"
         @touchstart.stop=""
-      ></v-btn>
+      >
+        <v-icon v-if="!drawerOpen" :icon="mdiArrowUp" />
+        <v-icon v-else :icon="mdiArrowDown" />
+      </v-btn>
       <div class="flex flex-col justify-between items-center">
         <div class="title" :class="drawerOpen ? '' : 'link'">
           <slot name="title"></slot>
