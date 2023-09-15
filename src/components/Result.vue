@@ -18,7 +18,6 @@ const isSelected = isThisSedeSelected(sede.id);
 
 <template>
   <div class="shadow-black drop-shadow bg-white py-2 px-4">
-    <v-divider></v-divider>
     <div class="flex flex-row justify-between">
       <div class="flex flex-col my-2 mr-4 overflow-hidden">
         <h6 class="font-bold text-black line-clamp-2 hover:line-clamp-none">

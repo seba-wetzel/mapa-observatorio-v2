@@ -1,12 +1,21 @@
 import { createApp } from "vue";
-import "./style.css";
+import "src/styles/style.css";
 import router from "src/Routes/index.js";
 import { createPinia } from "pinia";
 // Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import {
+  VLayout,
+  VContainer,
+  VSelect,
+  VChip,
+  VListItem,
+  VCheckbox,
+  VBtn,
+  VIcon,
+} from "vuetify/components";
+import { ClickOutside } from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 // import { VBottomSheet } from "vuetify/labs/VBottomSheet";
 
@@ -17,10 +26,18 @@ const pinia = createPinia();
 
 const vuetify = createVuetify({
   components: {
-    ...components,
-    // VBottomSheet,
+    VLayout,
+    VContainer,
+    VSelect,
+    VChip,
+    VListItem,
+    VCheckbox,
+    VBtn,
+    VIcon,
   },
-  directives,
+  directives: {
+    ClickOutside,
+  },
   icons: {
     defaultSet: "mdi",
     aliases,
